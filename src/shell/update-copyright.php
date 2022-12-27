@@ -32,7 +32,7 @@ if (PHP_SAPI != 'cli') {
 }
 
 // Max number of lines to check in each file, "@copyright" line shouldn't be further than 50 lines down
-define('MAX_SCAN_LINES', 50);
+const MAX_SCAN_LINES = 50;
 
 // Get all commits in format "HASH YYYY-MM-DD COMMIT_MSG"
 $commits = explode("\n", (string)shell_exec("git log --pretty='%H %cs %s'"));
@@ -136,7 +136,7 @@ $commits = array_reduce(
 );
 
 // If `php update-copyright.php dump` then stop here
-if ($argv[1] ?? '' === 'dump') {
+if (($argv[1] ?? '') === 'dump') {
     echo "Upstream Magento Commits:\n" . str_repeat('=', 80) . "\n" . implode("\n", $commits_magento) . "\n\n";
     echo "OpenMage Commits:\n" . str_repeat('=', 80) . "\n" . implode("\n", $commits_openmage) . "\n\n";
     exit;
