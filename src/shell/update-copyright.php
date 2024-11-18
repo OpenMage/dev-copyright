@@ -29,7 +29,7 @@ if (PHP_SAPI != 'cli') {
 const MAX_SCAN_LINES = 50;
 
 // Get all commits in format "HASH YYYY-MM-DD COMMIT_MSG"
-$commits = explode("\n", (string)shell_exec("git log --pretty='%H %cs %s'"));
+$commits = explode("\n", (string) shell_exec("git log --pretty='%H %cs %s'"));
 
 // Keep track of upstream Magento and OpenMage commits for debugging
 $commits_magento = [];
@@ -126,7 +126,7 @@ $commits = array_reduce(
 
         return $acc;
     },
-    []
+    [],
 );
 
 // If `php update-copyright.php dump` then stop here
@@ -137,7 +137,7 @@ if (($argv[1] ?? '') === 'dump') {
 }
 
 // Grep for all files that have "@copyright Magento", excluding .git
-$files = array_filter(explode("\n", (string)shell_exec("grep -Erl --exclude-dir='.git' '@copyright(.*)Magento' .")));
+$files = array_filter(explode("\n", (string) shell_exec("grep -Erl --exclude-dir='.git' '@copyright(.*)Magento' .")));
 
 // Stats
 $files_updated = 0;
@@ -149,7 +149,7 @@ foreach ($files as $file) {
     }
 
     // Get the commit hashes for this file
-    $commits_file = array_filter(explode("\n", (string)shell_exec("git log --pretty='%H' '$file'")));
+    $commits_file = array_filter(explode("\n", (string) shell_exec("git log --pretty='%H' '$file'")));
 
     // Find the years this file has been modified from our filtered $commits assoc array
     $copyright_years = [];
@@ -168,7 +168,7 @@ foreach ($files as $file) {
     $copyright_years_str = count($copyright_years) > 1 ? min($copyright_years) . '-' . max($copyright_years) : $copyright_years[0];
 
     // Get file, "@copyright" line shouldn't be further than MAX_SCAN_LINES lines down
-    $contents = explode("\n", (string)file_get_contents($file), MAX_SCAN_LINES);
+    $contents = explode("\n", (string) file_get_contents($file), MAX_SCAN_LINES);
 
     // Keep track if we need to update this file
     $update = false;
